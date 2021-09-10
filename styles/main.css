@@ -1,0 +1,70 @@
+html {
+    margin: 5px;
+}
+
+h1 {
+    font-size: 26px;
+    text-align: center;
+}
+
+#calc-container {
+    margin: auto;
+    width: 270px;
+    height: 360px; 
+    display: grid;
+    grid-template-rows: repeat(6, minmax(40px, 1fr));
+    grid-template-columns: repeat(4, minmax(40px, 1fr));
+    grid-gap: 1px;
+
+
+    --x: 50%;
+    --y: 50%;
+    
+    position: relative;
+    appearance: none;
+    padding: 10px;
+    color: white;
+    cursor: pointer;
+    outline: none;
+    /* border-radius: 100px; */
+    
+    border: 2px solid transparent;
+    background: radial-gradient(farthest-corner at var(--x) var(--y), #00C9A7, #845EC2) border-box;
+}
+
+#calc-display {
+    grid-column-start: 1;
+    grid-column-end: 5;
+    resize: none;
+    background-color: #edf4f9;
+    font-size: 16px;   
+}
+
+#backspc {
+    grid-column-start: 1;
+    grid-column-end:4;
+}
+
+button {
+    border-radius: 12px;
+    font-size: 20px;
+    font-style: italic;
+}
+
+.btn-op {
+    background-color: honeydew;
+}
+
+.btn-spcl {
+    background-color: papayawhip;
+}
+
+.btn-num {
+    background-color: lightgray;
+}
+
+div {
+    border: solid;
+    border-radius: 5px;
+    
+}
