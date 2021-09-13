@@ -28,7 +28,14 @@ td{
     border-color: rgb(95, 160, 122);
 }
 
+form {
+    display: grid;
+    grid-template-rows: repeat(5, minmax(40px, 1fr));
+}
 
+.btn-sub {
+    flex-shrink: 5;
+}
 
 #calc-container {
     margin: auto;
