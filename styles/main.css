@@ -1,3 +1,8 @@
+root {
+    width: 100%;
+    height: 100%;
+}
+
 html {
     margin: 5px;
 }
@@ -6,6 +11,24 @@ h1 {
     font-size: 26px;
     text-align: center;
 }
+
+table {
+    border: 2px;
+    width: -webkit-fill-available;
+}
+
+th {
+    border: solid;
+    border-color: cadetblue;
+}
+
+td{
+    padding: 5px;
+    border: solid;
+    border-color: rgb(95, 160, 122);
+}
+
+
 
 #calc-container {
     margin: auto;
@@ -51,20 +74,12 @@ button {
     font-style: italic;
 }
 
-.btn-op {
-    background-color: honeydew;
-}
-
-.btn-spcl {
+.btn-nrm {
     background-color: papayawhip;
-}
-
-.btn-num {
-    background-color: lightgray;
 }
 
 div {
     border: solid;
     border-radius: 5px;
-    
+    margin: 5px;
 }
