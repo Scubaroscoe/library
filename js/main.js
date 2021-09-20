@@ -27,50 +27,43 @@ if (storageAvailable('localStorage')) {
 	console.log('Local storage is not usable...');
 }
 
-function Book(title, author, pages, read) {
-	this.title = title;
-	this.author = author;
-	this.pages = pages;
-	this.read = read;
+class Book {
+	constructor(title, author, pages, read) {
+		this.title = title;
+		this.author = author;
+		this.pages = pages;
+		this._read = read;
+	}
 
-	// this.info = function() {
-	// 	let readOutput;
-	// 	if (read) {
-	// 		readOutput = "have read.";
-	// 	} else {
-	// 		readOutput = "not read yet.";
-	// 	}
-	// 	return `${title} by ${author}, ${pages} pages, ${readOutput}`;
-	// }
+	set read(bool) {
+		this._read = eval(bool);
+	}
 
-	// this.toggle = function() {
-	// 	if (this.read) {
-	// 		this.read = false;
-	// 	} else {
-	// 		this.read = true;
-	// 	}
-	// }
-}
+	get read() {
+		return this._read;
+	}
 
-function toggle(book) {
-	if (eval(book.read)) {
-		// book.read = false;
-		return "false";
-	} else {
-		// book.read = true;
-		return "true";
+	toggle() {
+		if (eval(this._read)) {
+			// book.read = false;
+			this._read = false;
+		} else {
+			// book.read = true;
+			this._read = true;
+		}
+	}
+	
+	info(book) {
+		let readOutput;
+		if (_read) {
+			readOutput = "have read.";
+		} else {
+			readOutput = "not read yet.";
+		}
+		return `${title} by ${author}, ${pages} pages, ${readOutput}`;
 	}
 }
 
-function info(book) {
-	let readOutput;
-	if (read) {
-		readOutput = "have read.";
-	} else {
-		readOutput = "not read yet.";
-	}
-	return `${title} by ${author}, ${pages} pages, ${readOutput}`;
-}
 
 function addNewBookToLibrary(title, author, pages, read) {
 	library.push(new Book(title, author, pages, read));
@@ -119,7 +112,7 @@ function createTableHead(table, someBook) {
 
 // create all cells
 // function createTableRows(body, library) {
-	function createTableRows(body) {	
+function createTableRows(body) {	
 	// if (library) {	// This needed in case library is set to null by setStorage
 	for (let i = 0; i < library.length; i++){
 		//create a table row
@@ -152,7 +145,7 @@ function createTableHead(table, someBook) {
 				cellCont = document.createElement('button');
 				cellCont.textContent = "Toggle Read";
 				cellCont.addEventListener('click', (e) => {
-					library[i].read = toggle(library[i]);
+					library[i].toggle();
 					let parentRow = document.querySelector(`tr[data-ind="${i}"]`);
 					let rowCells = parentRow.querySelectorAll('td');
 
@@ -183,7 +176,14 @@ function populateStorage() {
 function setStorage() {
 	let storedContainer = JSON.parse(localStorage.getItem('library'));
 	if (storedContainer) {	// if storedContainer is not null, then store in library
-		library = storedContainer;
+		let recreatedLibrary = [];
+		for (let i = 0; i < storedContainer.length; i++) {
+			let obj = storedContainer[i];
+			let book = new Book(obj.title, obj.author, obj.pages, obj._read);
+			recreatedLibrary.push(book);
+		}
+		// library = storedContainer;
+		library = recreatedLibrary;
 	} else {	// else set library to empty array
 		library = [];
 	}
@@ -222,14 +222,6 @@ if (!localStorage.getItem('library')) {
 	setStorage();
 }
 
-// let bloodMusic = new Book("Blood Music", "Greg Bear", 295, true);
-// let travelsWithCharlie = new Book("Travels with Charlie", "John Steinbeck", 274, true);
-// let unsocialSocialist = new Book("The Unsocial Socialist", "George Bernard Shaw", 389, true);
-// console.log(bloodMusic.info());
-
-// addBookToLibrary(bloodMusic);
-// addBookToLibrary(travelsWithCharlie);
-// addBookToLibrary(unsocialSocialist);
 displayCatalogue();
 
 // button related logic comes next
