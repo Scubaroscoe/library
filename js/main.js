@@ -228,31 +228,127 @@ displayCatalogue();
 const buttonNewBook = document.querySelector('#new-book');
 const newBookContainer = document.querySelector('#new-book-container');
 
-buttonNewBook.addEventListener('click', (e) => {
-	buttonNewBook.disabled = true;
+// buttonNewBook.addEventListener('click', (e) => {
+	// buttonNewBook.disabled = true;
+	// let form = document.createElement("form");
+	// form.setAttribute("method", "post");
+	// form.setAttribute("action", "");
+
+	// // Title is a required input for a new book
+	// let title = document.createElement('input');
+	// title.setAttribute('type', 'text');
+	// title.setAttribute('title', 'title');
+	// title.setAttribute('placeholder', 'Title');
+	// title.required = true;
+
+	// // Author is also a required input for a new book
+	// let author = document.createElement('input');
+	// author.setAttribute('type', 'text');
+	// author.setAttribute('author', 'author');
+	// author.setAttribute('placeholder', 'Author');
+	// author.required = true;
+
+	// // user can only input numbers. Setting to required for now
+	// let pages = document.createElement('input');
+	// pages.setAttribute('type', 'number');
+	// pages.setAttribute('pages', 'pages');
+	// pages.setAttribute('placeholder', 'Pages');
+	// pages.required = true;
+
+	// // Only allows for true or false, with false set as default
+	// let read = document.createElement('select');
+	// // read.setAttribute('type', 'text');
+	// read.setAttribute('read', 'read');
+	// read.setAttribute('placeholder', 'Read');
+	// let t = document.createElement("option");
+	// t.text = true;
+	// let f = document.createElement("option");
+	// f.text = false;
+	// read.add(t);
+	// read.add(f);
+	// f.setAttribute('selected', 'selected');
+
+	// // create a submit button
+	// let submitButton = document.createElement("input");
+	// submitButton.className = 'btn-sub';
+	// submitButton.setAttribute("type", "submit");
+	// submitButton.setAttribute("value", "Submit");
+
+	// Adds book to catalog, then removes form elements and reenables the new button
+	// submitButton.addEventListener('click', (e) => {
+	// 	addNewBookToLibrary(title.value, author.value, pages.value, read.value);
+	// 	displayCatalogue();
+	// 	buttonNewBook.disabled = false;
+	// 	while (form.lastChild) {
+	// 		form.removeChild(form.firstChild);
+	// 	}
+	// 	form.remove();
+	// })
+
+	// // append inputs to the form
+	// function handleSubmit(e) {
+	// 	addNewBookToLibrary(title.value, author.value, pages.value, read.value);
+	// 	displayCatalogue();
+	// 	buttonNewBook.disabled = false;
+	// 	while (form.lastChild) {
+	// 		form.removeChild(form.firstChild);
+	// 	}
+	// 	// The fact that the form is removed inside of its onsubmit function
+	// 	// causes a warning to pop up in the console. This isn't getting 
+	// 	// in the way of the functionality of this webpage, but it's definitely 
+	// 	// not ideal. If form elements were hidden instead of removed, that 
+	// 	// would likely fix this.
+	// 	// TODO: Replace form removal with form hiding.
+	// 	form.remove();
+	// }
+
+	// form.append(title, author, pages, read, submitButton);
+	// form.onsubmit = handleSubmit;
+
+	// newBookContainer.appendChild(form);
+// });
+
+
+// Make the form once with a function, and call it once
+function makeForm() {
+	// buttonNewBook.disabled = true;
 	let form = document.createElement("form");
 	form.setAttribute("method", "post");
 	form.setAttribute("action", "");
 
+	// Title is a required input for a new book
 	let title = document.createElement('input');
 	title.setAttribute('type', 'text');
 	title.setAttribute('title', 'title');
 	title.setAttribute('placeholder', 'Title');
+	title.required = true;
 
+	// Author is also a required input for a new book
 	let author = document.createElement('input');
 	author.setAttribute('type', 'text');
 	author.setAttribute('author', 'author');
 	author.setAttribute('placeholder', 'Author');
+	author.required = true;
 
+	// user can only input numbers. Setting to required for now
 	let pages = document.createElement('input');
-	pages.setAttribute('type', 'text');
+	pages.setAttribute('type', 'number');
 	pages.setAttribute('pages', 'pages');
 	pages.setAttribute('placeholder', 'Pages');
+	pages.required = true;
 
-	let read = document.createElement('input');
-	read.setAttribute('type', 'text');
+	// Only allows for true or false, with false set as default
+	let read = document.createElement('select');
+	// read.setAttribute('type', 'text');
 	read.setAttribute('read', 'read');
 	read.setAttribute('placeholder', 'Read');
+	let t = document.createElement("option");
+	t.text = true;
+	let f = document.createElement("option");
+	f.text = false;
+	read.add(t);
+	read.add(f);
+	f.setAttribute('selected', 'selected');
 
 	// create a submit button
 	let submitButton = document.createElement("input");
@@ -260,26 +356,31 @@ buttonNewBook.addEventListener('click', (e) => {
 	submitButton.setAttribute("type", "submit");
 	submitButton.setAttribute("value", "Submit");
 
-	// Adds book to catalog, then removes form elements and reenables the new button
-	submitButton.addEventListener('click', (e) => {
+		// append inputs to the form
+	function handleSubmit(e) {
 		addNewBookToLibrary(title.value, author.value, pages.value, read.value);
 		displayCatalogue();
 		buttonNewBook.disabled = false;
-		while (form.lastChild) {
-			form.removeChild(form.firstChild);
-		}
-		form.remove();
-	})
+		form.style.display = 'none';
+		e.preventDefault();
+	}
 
-	// append inputs to the form
-	form.appendChild(title);
-	form.appendChild(author);
-	form.appendChild(pages);
-	form.appendChild(read);
-	form.appendChild(submitButton);
+	form.append(title, author, pages, read, submitButton);
+	form.onsubmit = handleSubmit;
 
 	newBookContainer.appendChild(form);
-});
+	form.style.display = 'none';
+}
+
+// Called once just to make the form element
+makeForm();
+
+// This opens and closes the form for adding new books
+buttonNewBook.addEventListener('click', (e) => {
+	const form = document.querySelector('form');
+	form.style.display = 'grid';
+	buttonNewBook.disabled = true;
+})
 
 // You would use this if you had multiple pages
 // window.addEventListener('storage', function(e) {
